@@ -3,6 +3,7 @@ import {imagesUpload} from "../multer";
 import {Error, Types} from "mongoose";
 import Post from "../models/Post";
 import auth, {RequestWithUser} from "../middleware/auth";
+import dayjs from "dayjs";
 
 const postRouter = express.Router();
 
@@ -20,9 +21,17 @@ postRouter.get('/', async (req, res, next) => {
                 path: 'author',
                 select: '-password -token -_id'
             })
-            .sort({ dateTime: 1 })
+            .sort({ dateTime: -1 })
             .exec();
-        res.send(posts);
+
+        const formattedPosts = posts.map(post => {
+            const postObject = post.toObject();
+            return {
+                ...postObject,
+                dateTime: dayjs(postObject.dateTime).format('DD.MM.YYYY HH:mm'),
+            };
+        });
+        res.send(formattedPosts);
     } catch (e) {
         next(e);
     }
@@ -31,13 +40,22 @@ postRouter.get('/', async (req, res, next) => {
 postRouter.get('/:id', async (req, res, next) => {
     const id = req.params.id;
     try{
-        const posts = await Post.findById(id)
+        const post = await Post.findById(id)
             .populate({
                 path: 'author',
                 select: '-password -token -_id'
             })
             .exec();
-        res.send(posts);
+        if (!post) {
+            return res.status(404).send({error: 'Post not found'});
+        }
+        const postObject = post.toObject();
+        const formattedPost = {
+            ...postObject,
+            dateTime: dayjs(postObject.dateTime).format('DD.MM.YYYY HH:mm'),
+        };
+
+        res.send(formattedPost);
     } catch (e) {
         next(e);
     }
@@ -60,7 +78,13 @@ postRouter.post("/", imagesUpload.single('image'),auth, async (req, res, next) =
             path: 'author',
             select: '-password -token -_id'
         });
-        res.send(post);
+        const postObject = post.toObject();
+        const formattedPost = {
+            ...postObject,
+            dateTime: dayjs(postObject.dateTime).format('DD.MM.YYYY HH:mm')
+        };
+
+        res.send(formattedPost);
     } catch (e) {
         if(e instanceof Error.ValidationError) {
             res.status(400).send(e);

@@ -7,7 +7,7 @@ const usersRouter = express.Router();
 
 usersRouter.get("/", async (_req, res, next) => {
     try {
-        const users = await User.find();
+        const users = await User.find({}, '-token');
         res.send(users);
     } catch (e) {
         next (e);
@@ -42,7 +42,7 @@ usersRouter.post("/sessions", async (req, res, next) => {
         if (!user) {
             return res.status(404).send({error: "Username or Password is wrong"});
         }
-        console.log(user);
+
         const isMatch = await user.checkPassword(req.body.password);
 
         if (!isMatch) {
@@ -51,8 +51,6 @@ usersRouter.post("/sessions", async (req, res, next) => {
 
         user.generateToken();
         await user.save();
-
-        console.log(user);
 
         res.send(user);
     } catch (e) {
