@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import  mongoose from "mongoose";
 import config from "./config";
+import postRouter from "./routers/posts";
+import commentsRouter from "./routers/comments";
+import usersRouter from "./routers/users";
 
 const app = express();
 const port = 8000;
@@ -9,6 +12,10 @@ const port = 8000;
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
+
+app.use('/users', usersRouter);
+app.use('/posts', postRouter);
+app.use('/comments', commentsRouter);
 
 const run = async () => {
     await mongoose.connect(config.db);
