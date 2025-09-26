@@ -1,3 +1,27 @@
+export interface Comment {
+    author: User,
+    post: Post,
+    comment: string,
+}
+
+
+
+export interface Post {
+    _id: string;
+    author: User;
+    title: string;
+    content: string;
+    image?: string | null;
+    dateTime: string;
+}
+
+export interface PostMutation {
+    author: string;
+    title: string;
+    content: string;
+    image: string | null;
+}
+
 export interface User {
     _id: string;
     username: string;

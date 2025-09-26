@@ -3,6 +3,7 @@ import {type MouseEvent, useState} from "react";
 import {Button, Menu, MenuItem} from "@mui/material";
 import {useAppDispatch} from "../../app/hooks.ts";
 import {logout} from "../../features/users/usersThunks.ts";
+import {NavLink} from "react-router-dom";
 
 interface Props {
     user: User;
@@ -34,8 +35,7 @@ const Usermenu: React.FC<Props> = ({user}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My Account</MenuItem>
+                <MenuItem><Button component={NavLink} to={'/add'} color={'inherit'}>Add New Post</Button></MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </>

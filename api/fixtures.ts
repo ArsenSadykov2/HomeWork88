@@ -33,14 +33,14 @@ const run = async () => {
     const firstPost = await Post.create({
         author: firstUser._id,
         title: 'Post 1',
-        image: 'fixtures/image.png'
+        image: 'images/Image.png'
     });
 
     const secondPost = await Post.create({
         author: secondUser._id,
         title: 'Post 2',
         content: "Post 2 content",
-        image: 'fixtures/image.png'
+        image: 'images/Image.png'
     });
     await Comment.create({
         author: firstUser._id,
