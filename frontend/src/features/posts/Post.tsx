@@ -2,7 +2,6 @@ import {Grid, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {useEffect} from "react";
 import Spinner from "../../components/Spinner/Spinner.tsx";
-// import {useParams} from "react-router-dom";
 import {selectPosts, selectPostsLoading} from "./postsSlice.ts";
 import PostItem from "./components/PostItem.tsx";
 import {fetchAllPosts} from "./postsThunks.ts";
@@ -11,8 +10,6 @@ const Posts = () => {
     const dispatch = useAppDispatch();
     const posts = useAppSelector(selectPosts);
     const postsFetchLoading = useAppSelector(selectPostsLoading);
-
-    // const {id} = useParams();
 
     useEffect(() => {
         dispatch(fetchAllPosts());

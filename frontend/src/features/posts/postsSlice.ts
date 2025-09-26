@@ -36,8 +36,8 @@ export const postsSlice = createSlice({
             .addCase(fetchPostById.pending,(state) => {
                 state.fetchLoading = true;
             })
-            .addCase(fetchPostById.fulfilled,(state, {payload: posts}) => {
-                state.items = posts;
+            .addCase(fetchPostById.fulfilled,(state, {payload: post}) => {
+                state.item = post;
                 state.fetchLoading = false;
             })
             .addCase(fetchPostById.rejected,(state) => {

@@ -1,22 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi.ts";
 import {isAxiosError} from "axios";
-import type {Post, PostMutation, ValidationError} from "../../types";
+import type {CommentMutation, ValidationError} from "../../types";
 import type { RootState } from "../../app/store.ts";
 
-export const createPost = createAsyncThunk<void, PostMutation, {rejectValue: ValidationError, state: RootState}>(
-    'posts/createPost',
-    async (postMutation, {rejectWithValue, getState}) => {
-        try{
-            const formData = new FormData();
 
-            const keys = Object.keys(postMutation) as (keyof PostMutation)[];
-            keys.forEach(key => {
-                const value = postMutation[key] as (keyof PostMutation);
-                if(value !== null) {
-                    formData.append(key, value);
-                }
-            })
+
+export const createComment = createAsyncThunk<void, CommentMutation, {rejectValue: ValidationError, state: RootState}>(
+    'comments/createComment',
+    async (commentMutation, {rejectWithValue, getState}) => {
+        try{
             const token = getState().users.user?.token;
 
             if (!token) {
@@ -37,29 +30,29 @@ export const createPost = createAsyncThunk<void, PostMutation, {rejectValue: Val
                 'Authorization': token
             };
 
-            await axiosApi.post('/posts', formData, { headers });
+            await axiosApi.post('/comments', commentMutation, { headers });
+
         } catch (e) {
             if(isAxiosError(e) && e.response && e.response.status === 400) {
                 return rejectWithValue(e.response.data);
             }
-
             throw e;
         }
     }
 );
 
-export const fetchAllPosts = createAsyncThunk<Post[], void>(
-    'posts/fetchAllPosts',
+export const fetchAllComments = createAsyncThunk<Comment[], void>(
+    'comments/fetchAllComments',
     async () => {
-        const response = await axiosApi.get<Post[]>('/posts');
+        const response = await axiosApi.get<Comment[]>('/comments');
         return response.data;
     }
 );
 
-export const fetchPostById = createAsyncThunk<Post, string>(
-    'posts/fetchPostById',
-    async (postId) => {
-        const response = await axiosApi.get<Post>('/posts/' + postId);
-        return response.data || null;
+export const fetchCommentById = createAsyncThunk<Comment[], string>(
+    'comments/fetchCommentById',
+    async (commentId) => {
+        const response = await axiosApi.get<Comment[]>(`/comments?post=${commentId}`);
+        return response.data;
     }
 );

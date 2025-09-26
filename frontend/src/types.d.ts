@@ -1,10 +1,7 @@
-export interface Comment {
-    author: User,
-    post: Post,
-    comment: string,
+export interface CommentMutation {
+    comment: string;
+    post: string;
 }
-
-
 
 export interface Post {
     _id: string;
@@ -25,6 +22,13 @@ export interface User {
     _id: string;
     username: string;
     token: string;
+}
+
+export interface Comment {
+    _id: string;
+    author: User;
+    post: Post;
+    comment: string;
 }
 
 export interface RegisterMutation {
