@@ -6,8 +6,8 @@ import {Route, Routes } from 'react-router-dom';
 import Register from "./features/users/Register.tsx";
 import Login from "./features/users/Login.tsx";
 import Post from "./features/posts/Post.tsx";
-import PostForm from "./features/posts/components/PostForm.tsx";
 import CommentForm from "./features/components/CommentForm.tsx";
+import NewPost from "./features/posts/NewPost.tsx";
 
 const App = () => (
     <>
@@ -22,7 +22,7 @@ const App = () => (
             <Container maxWidth="xl">
                 <Routes>
                     <Route path="/" element={<Post/>}/>
-                    <Route path="/posts" element={<PostForm/>}/>
+                    <Route path="/posts" element={<NewPost/>}/>
                     <Route path="/comments" element={<CommentForm/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>

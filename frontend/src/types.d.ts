@@ -16,10 +16,9 @@ export interface Post {
 }
 
 export interface PostMutation {
-    author: string;
     title: string;
     content: string;
-    image: string | null;
+    image?: File | null;
 }
 
 export interface User {
@@ -40,7 +39,7 @@ export interface LoginMutation {
 
 export interface ValidationError {
     errors: {
-        [key: string]: {
+        authentication: {
             message: string;
             name: string;
         },

@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type {RootState} from "../../app/store.ts";
 import type {Post, ValidationError} from "../../types";
-import {addPost, fetchAllPosts, fetchPostById} from "./postsThunks.ts";
+import {createPost, fetchAllPosts, fetchPostById} from "./postsThunks.ts";
 
 interface PostsState {
     items: Post[];
@@ -43,14 +43,13 @@ export const postsSlice = createSlice({
             .addCase(fetchPostById.rejected,(state) => {
                 state.fetchLoading = false;
             })
-            .addCase(addPost.pending, (state) => {
+            .addCase(createPost.pending, (state) => {
                 state.fetchLoading = true;
             })
-            .addCase(addPost.fulfilled, (state, {payload: post}) => {
+            .addCase(createPost.fulfilled, (state) => {
                 state.fetchLoading = false;
-                state.item = post;
             })
-            .addCase(addPost.rejected, (state, {payload: error}) => {
+            .addCase(createPost.rejected, (state, {payload: error}) => {
                 state.fetchLoading = false;
                 state.fetchError = error || null;
             })

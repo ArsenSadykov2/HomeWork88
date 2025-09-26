@@ -35,7 +35,7 @@ const Usermenu: React.FC<Props> = ({user}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem><Button component={NavLink} to={'/add'} color={'inherit'}>Add New Post</Button></MenuItem>
+                <MenuItem><Button component={NavLink} to={'/posts'} color={'inherit'}>Add New Post</Button></MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </>
