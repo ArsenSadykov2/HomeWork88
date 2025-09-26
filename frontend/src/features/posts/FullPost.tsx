@@ -10,11 +10,13 @@ import {fetchPostById} from "./postsThunks.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import Comment from "../comments/Comment.tsx";
 import CommentForm from "../comments/components/CommentForm.tsx";
+import {selectUser} from "../users/usersSlice.ts";
 
 const FullPost = () => {
     const dispatch = useAppDispatch();
     const post = useAppSelector(selectOnePost);
     const fetchLoading = useAppSelector(selectPostsLoading);
+    const user = useAppSelector(selectUser);
 
     const {id} = useParams();
 
@@ -64,7 +66,13 @@ const FullPost = () => {
                 !fetchLoading && <Typography variant="h6">Post not found</Typography>
             )}
             <Comment/>
-            <CommentForm/>
+            {user ? <CommentForm/> : (
+                <Box sx={{ textAlign: 'center', mt: 3 }}>
+                    <Typography variant="h6" color="text.secondary">
+                        Please log in to leave a comment
+                    </Typography>
+                </Box>
+            )}
         </Container>
     );
 };
