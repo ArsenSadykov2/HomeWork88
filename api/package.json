@@ -18,8 +18,7 @@
     "dayjs": "^1.11.18",
     "express": "^5.1.0",
     "mongoose": "^8.18.2",
-    "multer": "^2.0.2",
-    "redux-persist": "^6.0.0"
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
