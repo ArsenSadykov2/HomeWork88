@@ -4,6 +4,7 @@ import {Error, Types} from "mongoose";
 import Post from "../models/Post";
 import auth, {RequestWithUser} from "../middleware/auth";
 import dayjs from "dayjs";
+import Comment from "../models/Comment";
 
 const postRouter = express.Router();
 
@@ -24,13 +25,15 @@ postRouter.get('/', async (req, res, next) => {
             .sort({ dateTime: -1 })
             .exec();
 
-        const formattedPosts = posts.map(post => {
+        const formattedPosts = await Promise.all(posts.map( async post => {
+            const commentCount = await Comment.countDocuments({ post: post._id });
             const postObject = post.toObject();
             return {
                 ...postObject,
                 dateTime: dayjs(postObject.dateTime).format('DD.MM.YYYY HH:mm'),
+                commentCount
             };
-        });
+        }));
         res.send(formattedPosts);
     } catch (e) {
         next(e);

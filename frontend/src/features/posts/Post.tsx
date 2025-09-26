@@ -40,6 +40,7 @@ const Posts = () => {
                                     title={post.title}
                                     image={post.image || undefined}
                                     dateTime={post.dateTime}
+                                    commentCount={post.commentCount}
                                 />
                             ))}
                         </Grid>

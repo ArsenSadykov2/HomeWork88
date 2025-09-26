@@ -10,6 +10,7 @@ export interface Post {
     content: string;
     image?: string | null;
     dateTime: string;
+    commentCount: number;
 }
 
 export interface PostMutation {

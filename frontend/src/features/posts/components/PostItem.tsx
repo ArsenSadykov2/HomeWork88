@@ -2,6 +2,7 @@ import {Box, Card, CardActions, CardContent, CardMedia, Grid, IconButton, Typogr
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
+import ChatIcon from '@mui/icons-material/Chat';
 import {Link} from 'react-router-dom';
 import NotFoundPic from '../../../assets/images/NotFoundPic.png';
 import {apiUrl} from "../../../../globalConstants.ts";
@@ -11,10 +12,11 @@ interface Props {
     author: string;
     title: string;
     image: string | undefined,
-    dateTime: string
+    dateTime: string,
+    commentCount: number;
 }
 
-const PostItem: React.FC<Props> = ({id, author, title, dateTime, image}) => {
+const PostItem: React.FC<Props> = ({id, author, title, dateTime, image, commentCount}) => {
     const theme = useTheme();
     let cartImage = NotFoundPic;
 
@@ -78,6 +80,12 @@ const PostItem: React.FC<Props> = ({id, author, title, dateTime, image}) => {
                             <CalendarTodayIcon fontSize="small" color="primary" />
                             <Typography variant="body2" color="text.secondary">
                                 {dateTime}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <ChatIcon fontSize="small" color="primary" /> {/* Добавь иконку */}
+                            <Typography variant="body2" color="text.secondary">
+                                Comments: {commentCount}
                             </Typography>
                         </Box>
                     </Box>
